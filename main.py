@@ -39,10 +39,8 @@ class TCPServer:
 			conn.sendall(response)
 			conn.close()
 
+	# Handles incoming data and returns a response.
 	def handle_request(self, data):
-		"""Handles incoming data and returns a response.
-		Override this in subclass.
-		"""
 		return data
 
 	# Generate a directory html page at index.html
@@ -78,8 +76,8 @@ class HTTPServer(TCPServer):
 		501: 'Not Implemented',
 	}
 
+	# Handles incoming requests
 	def handle_request(self, data):
-		"""Handles incoming requests"""
 		request = HTTPRequest(data) # Get a parsed HTTP request
 		try:
 			# Call the corresponding handler method for the current
@@ -90,17 +88,14 @@ class HTTPServer(TCPServer):
 		response = handler(request)
 		return response
 
+	# Returns response line (as bytes)
 	def response_line(self, status_code):
-		"""Returns response line (as bytes)"""
 		reason = self.status_codes[status_code]
 		response_line = 'HTTP/1.1 %s %s\r\n' % (status_code, reason)
 		return response_line.encode() # convert from str to bytes
 
+	# Returns headers as bytes. Extra headers can be used as a dict for sending extra headers with response
 	def response_headers(self, extra_headers=None):
-		"""Returns headers (as bytes).
-		The `extra_headers` can be a dict for sending
-		extra headers with the current response
-		"""
 		headers_copy = self.headers.copy() # make a local copy of headers
 		if extra_headers:
 			headers_copy.update(extra_headers)
@@ -109,16 +104,16 @@ class HTTPServer(TCPServer):
 			headers += '%s: %s\r\n' % (h, headers_copy[h])
 		return headers.encode() # convert str to bytes
 
+	# Handle options http method
 	def handle_OPTIONS(self, request):
-		"""Handler for OPTIONS HTTP method"""
 		response_line = self.response_line(200)
 		extra_headers = {'Allow': 'OPTIONS, GET'}
 		response_headers = self.response_headers(extra_headers)
 		blank_line = b'\r\n'
 		return b''.join([response_line, response_headers, blank_line])
 
+	# Handle GET http method
 	def handle_GET(self, request):
-		"""Handler for GET HTTP method"""
 		path = request.uri.strip('/') # remove slash from URI
 
 		if not path:
@@ -144,8 +139,8 @@ class HTTPServer(TCPServer):
 		response = b''.join([response_line, response_headers, blank_line, response_body])
 		return response
 
+	# 501 if method is not yet implemented
 	def HTTP_501_handler(self, request):
-		"""Returns 501 HTTP response if the requested method hasn't been implemented."""
 		response_line = self.response_line(status_code=501)
 		response_headers = self.response_headers()
 		blank_line = b'\r\n'
