@@ -1,7 +1,10 @@
-""" Crude Server
-This is supplementary code for a tutorial about writing HTTP servers from scratch.
-To get a better understating, read the tutorial at this link:
-https://bhch.github.io/posts/2017/11/writing-an-http-server-from-scratch/
+""" Basic Python 3 HTTP server
+	Write an HTTP server, in Python, using only the standard lib (excluding the `http` module).
+	The server should serve static files (its own code for example), and be able to list files like
+	Apache does when serving a directory.
+
+	Please spend about 2 hours on this. The goal is obviously not to re-create Apache with all its functionalities
+	but try to implement all the use-cases that you can think of and can cover in those 2 hours.
 """
 
 import os, socket, mimetypes
@@ -24,10 +27,9 @@ class TCPServer:
 
 		print("Listening at", s.getsockname())
 
-		# generate an html page that lists the other files in the server directory
-		# display index.html as the default page
+		# generate an html page that lists the other files in the server directory on server start
 		files = [f for f in os.listdir(os.getcwd()) if os.path.isfile(f)]
-		self.generate_directory_list(files)
+		self.generate_directory_list_page(files)
 
 		while True:
 			conn, addr = s.accept()
@@ -43,11 +45,10 @@ class TCPServer:
 		"""
 		return data
 
-	def generate_directory_list(self, filenames):
-
-		colour = ["red", "red", "green", "yellow"]
+	# Generate a directory html page at index.html
+	def generate_directory_list_page(self, filenames):
+		print("Generating directory page at index.html")
 		with open('index.html', 'w') as myFile:
-
 			myFile.write('<!DOCTYPE html> ')
 			myFile.write('<html>')
 			myFile.write('<head>')
@@ -60,6 +61,7 @@ class TCPServer:
 				myFile.write('</div>')
 			myFile.write('</body>')
 			myFile.write('</html>')
+		print("DONE")
 
 
 class HTTPServer(TCPServer):
@@ -126,10 +128,8 @@ class HTTPServer(TCPServer):
 		if os.path.exists(path) and not os.path.isdir(path): # don't serve directories
 			response_line = self.response_line(200)
 
-			# find out a file's MIME type
-			# if nothing is found, just send `text/html`
+			# find out a file's MIME type if nothing is found, just send `text/html`
 			content_type = mimetypes.guess_type(path)[0] or 'text/html'
-
 			extra_headers = {'Content-Type': content_type}
 			response_headers = self.response_headers(extra_headers)
 
@@ -156,7 +156,7 @@ class HTTPServer(TCPServer):
 class HTTPRequest:
 	"""Parser for HTTP requests.
 
-	It takes raw data and extracts meaningful information about the incoming request.
+	It takes raw data and extracts information about the incoming request.
 	Instances of this class have the following attributes:
 		self.method: The current HTTP request method sent by client (string)
 		self.uri: URI for the current request (string)
@@ -180,7 +180,7 @@ class HTTPRequest:
 		if len(words) > 1:
 			# we put this in if block because sometimes browsers
 			# don't send URI with the request for homepage
-			self.uri = words[1].decode() # call decode to convert bytes to string
+			self.uri = words[1].decode() # call decode to convert bytes to string python3
 
 		if len(words) > 2:
 			# we put this in if block because sometimes browsers
