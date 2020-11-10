@@ -1,4 +1,4 @@
-""" Basic Python 3 HTTP server
+""" Basic Python 3 HTTP server without the HTTP library
 
 	La question:
 		Write an HTTP server, in Python, using only the standard lib (excluding the `http` module).
@@ -19,7 +19,7 @@ class TCPServer:
 	The HTTP server will inherit from this class.
 	"""
 
-	def __init__(self, host='127.0.0.1', port=8000):
+	def __init__(self, host='127.0.0.1', port = 8000):
 		self.host = host
 		self.port = port
 
@@ -65,7 +65,6 @@ class TCPServer:
 			myFile.write('</body>')
 			myFile.write('</html>')
 		print("DONE")
-
 
 class HTTPServer(TCPServer):
 	"""The actual HTTP server class."""
@@ -151,7 +150,6 @@ class HTTPServer(TCPServer):
 		blank_line = b'\r\n'
 		response_body = b'<h1>501 Not Implemented</h1>'
 		return b"".join([response_line, response_headers, blank_line, response_body])
-
 
 class HTTPRequest:
 	"""Parser for HTTP requests.
