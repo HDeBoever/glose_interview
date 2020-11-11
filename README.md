@@ -6,7 +6,7 @@ Ensuite, ouvrez un navigateur. Aller vers http://localhost:8000/index.html
 Les interactions avec les pages dans le navigateur s'afficheront sur la console.
 
 J'ai testé mon logiciel avec Python 3.7.9, et j'ai utilisé les modules de base os, socket, et mimetypes.
-J'ai testé sur Google Chrome, et sur Microsoft Edge.
+J'ai testé sur Google Chrome, et sur Microsoft Edge avec une machine Ubuntu. J'ai inclu des fichiers de code, et une image comme exemple de fichiers qui pourrait être sur un serveur.
 
 Autres fonctionalités à implémenter:
 

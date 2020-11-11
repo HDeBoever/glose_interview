@@ -18,7 +18,6 @@ class TCPServer:
 	"""Base server class for handling TCP connections.
 	The HTTP server will inherit from this class.
 	"""
-
 	def __init__(self, host='127.0.0.1', port = 8000):
 		self.host = host
 		self.port = port
@@ -68,7 +67,6 @@ class TCPServer:
 
 class HTTPServer(TCPServer):
 	"""The actual HTTP server class."""
-
 	headers = {
 		'Server': 'StaticServer',
 		'Content-Type': 'text/html',
