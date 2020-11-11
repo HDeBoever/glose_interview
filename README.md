@@ -10,8 +10,9 @@ J'ai testé sur Google Chrome, et sur Microsoft Edge avec une machine Ubuntu. J'
 
 Autres fonctionalités à implémenter:
 
-- Un système pour faire des logs vers un fichier .txt
+- Un système pour faire des logs vers un fichier .txt avec les fonctionalités de la library datetime.
+- Faire une version avec les libraries aiohttp et async pour pouvoir gérer multiples clients.
 - Faire des tests pour rendre le serveur plus robuste et pour pouvoir gérer
   des fichiers plus volumineux.
 - J'ai pas pris en compte les cookies, ou la possibilité de faire du caching.
-- Considérations de cybersécurité.
+- Considérations de cybersécurité et adaptation vers une platforme compatible avec WSGI.

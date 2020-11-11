@@ -8,7 +8,7 @@
 		Please spend about 2 hours on this. The goal is obviously not to re-create Apache with all its functionalities
 		but try to implement all the use-cases that you can think of and can cover in those 2 hours.
 
-	J'ai utilisé la porte 8000 par défaut. Pour tester le serveur, executer le fichier main.py, et PkqtHYP0qU_VKJKiSvr
+	J'ai utilisé la porte 8000 par défaut. Pour tester le serveur, executer le fichier main.py, et 
 	ouvrez un navigateur, dans mon cas, google chrome, et puis naviguez vers http://localhost:8000
 """
 
